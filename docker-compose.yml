@@ -46,12 +46,32 @@ services:
     networks:
       - hr-network
 
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: hr-pgadmin
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+      PGADMIN_CONFIG_SERVER_MODE: "False"
+      PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: "False"
+    ports:
+      - "5050:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    depends_on:
+      - postgres
+    networks:
+      - hr-network
+
 volumes:
   postgres_data:
     driver: local
   mongodb_data:
     driver: local
   mongodb_config:
+    driver: local
+  pgadmin_data:
     driver: local
 
 networks:

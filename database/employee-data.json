@@ -1,0 +1,603 @@
+[
+    {
+        "employee_id": "EMP001",
+        "first_name": "Sarah",
+        "last_name": "Johnson",
+        "date_of_birth": "1988-03-15",
+        "address": {
+            "street": "742 Maple Avenue",
+            "city": "San Francisco",
+            "state": "CA",
+            "postal_code": "94102",
+            "country": "USA"
+        },
+        "contact_details": {
+            "email": "sarah.johnson@company.com",
+            "phone_number": "+1-415-555-0123"
+        },
+        "job_details": {
+            "job_title": "Senior Software Engineer",
+            "department": "Engineering",
+            "hire_date": "2019-06-01",
+            "employment_type": "Full-time",
+            "salary": 145000,
+            "currency": "USD"
+        },
+        "work_location": {
+            "nearest_office": "San Francisco HQ",
+            "is_remote": false
+        },
+        "reporting_manager": "Michael Chen",
+        "skills": [
+            "JavaScript",
+            "React",
+            "Node.js",
+            "TypeScript",
+            "AWS",
+            "Docker"
+        ],
+        "performance_reviews": [
+            {
+                "review_date": "2023-12-15",
+                "rating": 4.5,
+                "comments": "Excellent technical leadership and mentoring skills. Successfully led the migration to microservices architecture."
+            },
+            {
+                "review_date": "2022-12-15",
+                "rating": 4.2,
+                "comments": "Strong performance delivering critical features on time. Great team collaboration."
+            }
+        ],
+        "benefits": {
+            "health_insurance": "Premium Plan",
+            "retirement_plan": "401k with 5% match",
+            "paid_time_off": 25
+        },
+        "emergency_contact": {
+            "name": "David Johnson",
+            "relationship": "Spouse",
+            "phone_number": "+1-415-555-0124"
+        },
+        "notes": "Key contributor to the platform modernization initiative. Actively involved in technical recruiting and mentorship programs."
+    },
+    {
+        "employee_id": "EMP002",
+        "first_name": "Marcus",
+        "last_name": "Williams",
+        "date_of_birth": "1992-07-22",
+        "address": {
+            "street": "1523 Ocean Boulevard",
+            "city": "Seattle",
+            "state": "WA",
+            "postal_code": "98101",
+            "country": "USA"
+        },
+        "contact_details": {
+            "email": "marcus.williams@company.com",
+            "phone_number": "+1-206-555-0198"
+        },
+        "job_details": {
+            "job_title": "Data Scientist",
+            "department": "Data Analytics",
+            "hire_date": "2021-03-15",
+            "employment_type": "Full-time",
+            "salary": 130000,
+            "currency": "USD"
+        },
+        "work_location": {
+            "nearest_office": "Seattle Office",
+            "is_remote": true
+        },
+        "reporting_manager": "Jennifer Liu",
+        "skills": [
+            "Python",
+            "Machine Learning",
+            "TensorFlow",
+            "SQL",
+            "R",
+            "Data Visualization"
+        ],
+        "performance_reviews": [
+            {
+                "review_date": "2023-12-15",
+                "rating": 4.8,
+                "comments": "Outstanding work on predictive analytics models. Improved customer retention by 15% through ML insights."
+            },
+            {
+                "review_date": "2022-12-15",
+                "rating": 4.3,
+                "comments": "Strong analytical skills and effective communication of complex data insights to stakeholders."
+            }
+        ],
+        "benefits": {
+            "health_insurance": "Premium Plan",
+            "retirement_plan": "401k with 5% match",
+            "paid_time_off": 22
+        },
+        "emergency_contact": {
+            "name": "Patricia Williams",
+            "relationship": "Mother",
+            "phone_number": "+1-206-555-0199"
+        },
+        "notes": "Specializes in predictive modeling and customer behavior analysis. Published two research papers on ML applications in business."
+    },
+    {
+        "employee_id": "EMP003",
+        "first_name": "Emily",
+        "last_name": "Chen",
+        "date_of_birth": "1990-11-08",
+        "address": {
+            "street": "89 Park Street",
+            "city": "New York",
+            "state": "NY",
+            "postal_code": "10001",
+            "country": "USA"
+        },
+        "contact_details": {
+            "email": "emily.chen@company.com",
+            "phone_number": "+1-212-555-0145"
+        },
+        "job_details": {
+            "job_title": "Product Manager",
+            "department": "Product",
+            "hire_date": "2020-01-20",
+            "employment_type": "Full-time",
+            "salary": 140000,
+            "currency": "USD"
+        },
+        "work_location": {
+            "nearest_office": "New York Office",
+            "is_remote": false
+        },
+        "reporting_manager": "Robert Anderson",
+        "skills": [
+            "Product Strategy",
+            "Agile",
+            "User Research",
+            "SQL",
+            "Analytics",
+            "Roadmap Planning"
+        ],
+        "performance_reviews": [
+            {
+                "review_date": "2023-12-15",
+                "rating": 4.6,
+                "comments": "Exceptional product vision and execution. Successfully launched three major features that increased user engagement by 30%."
+            },
+            {
+                "review_date": "2022-12-15",
+                "rating": 4.4,
+                "comments": "Strong stakeholder management and cross-functional collaboration. Consistently delivers high-quality product releases."
+            }
+        ],
+        "benefits": {
+            "health_insurance": "Premium Plan",
+            "retirement_plan": "401k with 5% match",
+            "paid_time_off": 23
+        },
+        "emergency_contact": {
+            "name": "James Chen",
+            "relationship": "Father",
+            "phone_number": "+1-212-555-0146"
+        },
+        "notes": "Leads the mobile app product line. Known for data-driven decision making and strong customer empathy."
+    },
+    {
+        "employee_id": "EMP004",
+        "first_name": "Rajesh",
+        "last_name": "Patel",
+        "date_of_birth": "1985-05-30",
+        "address": {
+            "street": "456 Tech Drive",
+            "city": "Austin",
+            "state": "TX",
+            "postal_code": "78701",
+            "country": "USA"
+        },
+        "contact_details": {
+            "email": "rajesh.patel@company.com",
+            "phone_number": "+1-512-555-0187"
+        },
+        "job_details": {
+            "job_title": "DevOps Engineer",
+            "department": "Engineering",
+            "hire_date": "2018-09-10",
+            "employment_type": "Full-time",
+            "salary": 135000,
+            "currency": "USD"
+        },
+        "work_location": {
+            "nearest_office": "Austin Office",
+            "is_remote": true
+        },
+        "reporting_manager": "Michael Chen",
+        "skills": [
+            "Kubernetes",
+            "Docker",
+            "AWS",
+            "Terraform",
+            "CI/CD",
+            "Python",
+            "Linux"
+        ],
+        "performance_reviews": [
+            {
+                "review_date": "2023-12-15",
+                "rating": 4.7,
+                "comments": "Exceptional infrastructure automation work. Reduced deployment time by 60% and improved system reliability significantly."
+            },
+            {
+                "review_date": "2022-12-15",
+                "rating": 4.5,
+                "comments": "Outstanding technical expertise in cloud infrastructure. Mentors junior engineers effectively."
+            }
+        ],
+        "benefits": {
+            "health_insurance": "Premium Plan",
+            "retirement_plan": "401k with 5% match",
+            "paid_time_off": 26
+        },
+        "emergency_contact": {
+            "name": "Priya Patel",
+            "relationship": "Spouse",
+            "phone_number": "+1-512-555-0188"
+        },
+        "notes": "Infrastructure architect with deep expertise in cloud platforms. On-call rotation lead for production systems."
+    },
+    {
+        "employee_id": "EMP005",
+        "first_name": "Amanda",
+        "last_name": "Martinez",
+        "date_of_birth": "1994-09-12",
+        "address": {
+            "street": "2341 Sunset Boulevard",
+            "city": "Los Angeles",
+            "state": "CA",
+            "postal_code": "90026",
+            "country": "USA"
+        },
+        "contact_details": {
+            "email": "amanda.martinez@company.com",
+            "phone_number": "+1-323-555-0156"
+        },
+        "job_details": {
+            "job_title": "UX Designer",
+            "department": "Design",
+            "hire_date": "2022-02-01",
+            "employment_type": "Full-time",
+            "salary": 110000,
+            "currency": "USD"
+        },
+        "work_location": {
+            "nearest_office": "Los Angeles Office",
+            "is_remote": false
+        },
+        "reporting_manager": "Lisa Anderson",
+        "skills": [
+            "Figma",
+            "User Research",
+            "Prototyping",
+            "Design Systems",
+            "Accessibility",
+            "HTML/CSS"
+        ],
+        "performance_reviews": [
+            {
+                "review_date": "2023-12-15",
+                "rating": 4.4,
+                "comments": "Creative and user-focused designs. Successfully redesigned the checkout flow, improving conversion by 20%."
+            }
+        ],
+        "benefits": {
+            "health_insurance": "Standard Plan",
+            "retirement_plan": "401k with 5% match",
+            "paid_time_off": 20
+        },
+        "emergency_contact": {
+            "name": "Carlos Martinez",
+            "relationship": "Brother",
+            "phone_number": "+1-323-555-0157"
+        },
+        "notes": "Passionate about inclusive design and accessibility. Leads the design system initiative."
+    },
+    {
+        "employee_id": "EMP006",
+        "first_name": "David",
+        "last_name": "Kim",
+        "date_of_birth": "1987-02-28",
+        "address": {
+            "street": "678 Innovation Way",
+            "city": "Boston",
+            "state": "MA",
+            "postal_code": "02101",
+            "country": "USA"
+        },
+        "contact_details": {
+            "email": "david.kim@company.com",
+            "phone_number": "+1-617-555-0134"
+        },
+        "job_details": {
+            "job_title": "Security Engineer",
+            "department": "Security",
+            "hire_date": "2020-07-15",
+            "employment_type": "Full-time",
+            "salary": 150000,
+            "currency": "USD"
+        },
+        "work_location": {
+            "nearest_office": "Boston Office",
+            "is_remote": true
+        },
+        "reporting_manager": "Sarah Thompson",
+        "skills": [
+            "Penetration Testing",
+            "Security Auditing",
+            "Python",
+            "Network Security",
+            "Cloud Security",
+            "Incident Response"
+        ],
+        "performance_reviews": [
+            {
+                "review_date": "2023-12-15",
+                "rating": 4.9,
+                "comments": "Exemplary security leadership. Implemented comprehensive security framework that passed SOC 2 audit with zero findings."
+            },
+            {
+                "review_date": "2022-12-15",
+                "rating": 4.6,
+                "comments": "Proactive threat detection and rapid incident response. Built robust security monitoring systems."
+            }
+        ],
+        "benefits": {
+            "health_insurance": "Premium Plan",
+            "retirement_plan": "401k with 5% match",
+            "paid_time_off": 24
+        },
+        "emergency_contact": {
+            "name": "Michelle Kim",
+            "relationship": "Spouse",
+            "phone_number": "+1-617-555-0135"
+        },
+        "notes": "Security team lead responsible for infrastructure and application security. CISSP certified."
+    },
+    {
+        "employee_id": "EMP007",
+        "first_name": "Jessica",
+        "last_name": "Taylor",
+        "date_of_birth": "1991-12-05",
+        "address": {
+            "street": "1890 Market Street",
+            "city": "Denver",
+            "state": "CO",
+            "postal_code": "80202",
+            "country": "USA"
+        },
+        "contact_details": {
+            "email": "jessica.taylor@company.com",
+            "phone_number": "+1-303-555-0167"
+        },
+        "job_details": {
+            "job_title": "Marketing Manager",
+            "department": "Marketing",
+            "hire_date": "2021-05-10",
+            "employment_type": "Full-time",
+            "salary": 105000,
+            "currency": "USD"
+        },
+        "work_location": {
+            "nearest_office": "Denver Office",
+            "is_remote": false
+        },
+        "reporting_manager": "Karen White",
+        "skills": [
+            "Digital Marketing",
+            "SEO",
+            "Content Strategy",
+            "Google Analytics",
+            "Social Media",
+            "Campaign Management"
+        ],
+        "performance_reviews": [
+            {
+                "review_date": "2023-12-15",
+                "rating": 4.3,
+                "comments": "Strong campaign execution and brand building. Increased organic traffic by 45% year-over-year."
+            },
+            {
+                "review_date": "2022-12-15",
+                "rating": 4.1,
+                "comments": "Effective marketing strategies and good cross-team collaboration."
+            }
+        ],
+        "benefits": {
+            "health_insurance": "Standard Plan",
+            "retirement_plan": "401k with 5% match",
+            "paid_time_off": 21
+        },
+        "emergency_contact": {
+            "name": "Robert Taylor",
+            "relationship": "Father",
+            "phone_number": "+1-303-555-0168"
+        },
+        "notes": "Leads content marketing and SEO initiatives. Previously worked in B2B SaaS marketing for 5 years."
+    },
+    {
+        "employee_id": "EMP008",
+        "first_name": "Mohammed",
+        "last_name": "Hassan",
+        "date_of_birth": "1989-08-19",
+        "address": {
+            "street": "3456 Lake Shore Drive",
+            "city": "Chicago",
+            "state": "IL",
+            "postal_code": "60611",
+            "country": "USA"
+        },
+        "contact_details": {
+            "email": "mohammed.hassan@company.com",
+            "phone_number": "+1-312-555-0178"
+        },
+        "job_details": {
+            "job_title": "Sales Director",
+            "department": "Sales",
+            "hire_date": "2019-11-01",
+            "employment_type": "Full-time",
+            "salary": 160000,
+            "currency": "USD"
+        },
+        "work_location": {
+            "nearest_office": "Chicago Office",
+            "is_remote": false
+        },
+        "reporting_manager": "Patricia Moore",
+        "skills": [
+            "Enterprise Sales",
+            "Salesforce",
+            "Negotiation",
+            "Account Management",
+            "Business Development",
+            "CRM"
+        ],
+        "performance_reviews": [
+            {
+                "review_date": "2023-12-15",
+                "rating": 4.8,
+                "comments": "Outstanding sales performance exceeding quota by 140%. Built strong relationships with key enterprise accounts."
+            },
+            {
+                "review_date": "2022-12-15",
+                "rating": 4.7,
+                "comments": "Exceptional sales leadership and team development. Closed three major deals worth $2M+ each."
+            }
+        ],
+        "benefits": {
+            "health_insurance": "Premium Plan",
+            "retirement_plan": "401k with 5% match",
+            "paid_time_off": 23
+        },
+        "emergency_contact": {
+            "name": "Fatima Hassan",
+            "relationship": "Spouse",
+            "phone_number": "+1-312-555-0179"
+        },
+        "notes": "Top performer in enterprise sales. Manages a team of 8 account executives and the Midwest territory."
+    },
+    {
+        "employee_id": "EMP009",
+        "first_name": "Lisa",
+        "last_name": "Anderson",
+        "date_of_birth": "1986-04-17",
+        "address": {
+            "street": "567 Design Plaza",
+            "city": "Portland",
+            "state": "OR",
+            "postal_code": "97201",
+            "country": "USA"
+        },
+        "contact_details": {
+            "email": "lisa.anderson@company.com",
+            "phone_number": "+1-503-555-0189"
+        },
+        "job_details": {
+            "job_title": "Design Director",
+            "department": "Design",
+            "hire_date": "2017-03-20",
+            "employment_type": "Full-time",
+            "salary": 155000,
+            "currency": "USD"
+        },
+        "work_location": {
+            "nearest_office": "Portland Office",
+            "is_remote": false
+        },
+        "reporting_manager": "Robert Anderson",
+        "skills": [
+            "Design Leadership",
+            "Brand Strategy",
+            "Figma",
+            "Creative Direction",
+            "Team Management",
+            "Design Systems"
+        ],
+        "performance_reviews": [
+            {
+                "review_date": "2023-12-15",
+                "rating": 4.7,
+                "comments": "Excellent leadership of the design team. Successfully rebranded the company and improved brand recognition by 50%."
+            },
+            {
+                "review_date": "2022-12-15",
+                "rating": 4.6,
+                "comments": "Strong creative vision and effective team building. Grew design team from 3 to 12 members."
+            }
+        ],
+        "benefits": {
+            "health_insurance": "Premium Plan",
+            "retirement_plan": "401k with 5% match",
+            "paid_time_off": 27
+        },
+        "emergency_contact": {
+            "name": "Mark Anderson",
+            "relationship": "Spouse",
+            "phone_number": "+1-503-555-0190"
+        },
+        "notes": "Design team lead with 15+ years of experience. Oversees all product design, brand, and creative initiatives."
+    },
+    {
+        "employee_id": "EMP010",
+        "first_name": "Thomas",
+        "last_name": "O'Brien",
+        "date_of_birth": "1993-06-25",
+        "address": {
+            "street": "234 University Avenue",
+            "city": "Miami",
+            "state": "FL",
+            "postal_code": "33101",
+            "country": "USA"
+        },
+        "contact_details": {
+            "email": "thomas.obrien@company.com",
+            "phone_number": "+1-305-555-0192"
+        },
+        "job_details": {
+            "job_title": "Customer Success Manager",
+            "department": "Customer Success",
+            "hire_date": "2022-08-15",
+            "employment_type": "Full-time",
+            "salary": 95000,
+            "currency": "USD"
+        },
+        "work_location": {
+            "nearest_office": "Miami Office",
+            "is_remote": true
+        },
+        "reporting_manager": "Jennifer Martinez",
+        "skills": [
+            "Customer Relations",
+            "Account Management",
+            "Zendesk",
+            "Salesforce",
+            "Technical Support",
+            "Communication"
+        ],
+        "performance_reviews": [
+            {
+                "review_date": "2023-12-15",
+                "rating": 4.2,
+                "comments": "Strong customer advocacy and problem-solving skills. Maintained 95% customer satisfaction rating and reduced churn by 12%."
+            }
+        ],
+        "benefits": {
+            "health_insurance": "Standard Plan",
+            "retirement_plan": "401k with 5% match",
+            "paid_time_off": 20
+        },
+        "emergency_contact": {
+            "name": "Margaret O'Brien",
+            "relationship": "Mother",
+            "phone_number": "+1-305-555-0193"
+        },
+        "notes": "Manages 30+ enterprise customer accounts. Known for proactive communication and quick issue resolution."
+    }
+]
