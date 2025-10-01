@@ -1,3 +1,16 @@
+# HR AI Agent Backend
+
+A production-ready NestJS backend for an intelligent HR chatbot that supports both MongoDB Atlas and PostgreSQL with PGVector. Built with LangChain, LangGraph, and Claude AI.
+
+## 🚀 Features
+
+- **Multi-Database Support**: Choose between MongoDB Atlas or PostgreSQL at runtime
+- **Intelligent Conversations**: Powered by Claude 4 Sonnet with LangGraph
+- **Semantic Search**: Vector similarity search for employee information
+- **Conversation Memory**: Persistent chat history using database-specific checkpointers
+
+---
+
 # Turborepo starter
 
 This Turborepo starter is maintained by the Turborepo core team.

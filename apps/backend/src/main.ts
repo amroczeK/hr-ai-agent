@@ -31,7 +31,7 @@ async function bootstrap() {
     .addTag('hr-ai-agent')
     .build();
   const documentFactory = () => SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, documentFactory);
+  SwaggerModule.setup('api/docs', app, documentFactory);
 
   const port = process.env.PORT ?? 3000;
   await app.listen(port);
