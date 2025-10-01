@@ -1,9 +1,15 @@
-import { Injectable, OnModuleInit, OnModuleDestroy } from '@nestjs/common';
+import {
+  Injectable,
+  OnModuleInit,
+  OnModuleDestroy,
+  Logger,
+} from '@nestjs/common';
 import { Pool, PoolClient } from 'pg';
 import { databaseConfig } from '../../config/database.config';
 
 @Injectable()
 export class PostgresProvider implements OnModuleInit, OnModuleDestroy {
+  private readonly logger = new Logger(PostgresProvider.name);
   private pool: Pool;
 
   async onModuleInit() {
@@ -18,9 +24,9 @@ export class PostgresProvider implements OnModuleInit, OnModuleDestroy {
 
       const client = await this.pool.connect();
       client.release();
-      console.log('PostgreSQL connected successfully');
+      this.logger.log('PostgreSQL connected successfully');
     } catch (error) {
-      console.error('PostgreSQL connection error:', error);
+      this.logger.error('PostgreSQL connection error:', error);
       throw error;
     }
   }
@@ -28,7 +34,7 @@ export class PostgresProvider implements OnModuleInit, OnModuleDestroy {
   async onModuleDestroy() {
     if (this.pool) {
       await this.pool.end();
-      console.log('PostgreSQL connection closed');
+      this.logger.log('PostgreSQL connection closed');
     }
   }
 

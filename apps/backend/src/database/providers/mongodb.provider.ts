@@ -1,9 +1,15 @@
-import { Injectable, OnModuleInit, OnModuleDestroy } from '@nestjs/common';
+import {
+  Injectable,
+  OnModuleInit,
+  OnModuleDestroy,
+  Logger,
+} from '@nestjs/common';
 import { MongoClient, Db, Collection } from 'mongodb';
 import { databaseConfig } from '../../config/database.config';
 
 @Injectable()
 export class MongoDBProvider implements OnModuleInit, OnModuleDestroy {
+  private readonly logger = new Logger(MongoDBProvider.name);
   private client: MongoClient;
   private db: Db;
 
@@ -12,9 +18,9 @@ export class MongoDBProvider implements OnModuleInit, OnModuleDestroy {
       this.client = new MongoClient(databaseConfig.mongodb.uri);
       await this.client.connect();
       this.db = this.client.db(databaseConfig.mongodb.dbName);
-      console.log('MongoDB connected successfully');
+      this.logger.log('MongoDB connected successfully');
     } catch (error) {
-      console.error('MongoDB connection error:', error);
+      this.logger.error('MongoDB connection error:', error);
       throw error;
     }
   }
@@ -22,7 +28,7 @@ export class MongoDBProvider implements OnModuleInit, OnModuleDestroy {
   async onModuleDestroy() {
     if (this.client) {
       await this.client.close();
-      console.log('MongoDB connection closed');
+      this.logger.log('MongoDB connection closed');
     }
   }
 
