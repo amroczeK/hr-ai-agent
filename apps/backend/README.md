@@ -12,7 +12,7 @@ A production-ready NestJS backend for an intelligent HR chatbot that supports bo
 
 ## Description
 
-Built with [NestJS](https://github.com/nestjs/nest) framework. Access the backend swagger docs via [http://localhost:3000/api/docs](http://localhost:3000/api/docs).
+Built with [NestJS](https://github.com/nestjs/nest) framework. Access the backend swagger docs via [http://localhost:3001/api/docs](http://localhost:3001/api/docs).
 
 ## Prerequisites
 - OpenAI and Anthropic API keys
