@@ -5,10 +5,13 @@ import {
   HttpException,
   HttpStatus,
   Logger,
+  Version,
 } from '@nestjs/common';
 import { ChatService } from './chat.service';
 import { ChatRequestDto } from './dto/chat-request.dto';
 import { ChatResponseDto } from './dto/chat-response.dto';
+import { ApiResponse } from '@nestjs/swagger';
+import { ApiOperation } from '@nestjs/swagger';
 
 @Controller('chat')
 export class ChatController {
@@ -16,6 +19,10 @@ export class ChatController {
 
   constructor(private readonly chatService: ChatService) {}
 
+  @Version('1')
+  @ApiOperation({ summary: 'Chat with the HR AI Agent' })
+  @ApiResponse({ status: 200, description: 'Chat response' })
+  @ApiResponse({ status: 500, description: 'Internal server error' })
   @Post()
   async chat(@Body() chatRequest: ChatRequestDto): Promise<ChatResponseDto> {
     try {
