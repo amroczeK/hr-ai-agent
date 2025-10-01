@@ -1,5 +1,5 @@
 import { IsString, IsEnum, IsNotEmpty, IsOptional } from 'class-validator';
-import { DatabaseType } from '../../config/database.config';
+import type { DatabaseType } from '../../config/database.config';
 
 export class ChatRequestDto {
   @IsString()
