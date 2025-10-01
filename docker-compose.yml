@@ -24,8 +24,34 @@ services:
     networks:
       - hr-network
 
+  mongodb:
+    image: mongo:7.0
+    container_name: hr-mongodb
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin
+      MONGO_INITDB_DATABASE: hr_database
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+      - mongodb_config:/data/configdb
+      - ./docker/init-scripts/02-init-mongodb.js:/docker-entrypoint-initdb.d/02-init-mongodb.js:ro
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - hr-network
+
 volumes:
   postgres_data:
+    driver: local
+  mongodb_data:
+    driver: local
+  mongodb_config:
     driver: local
 
 networks:
