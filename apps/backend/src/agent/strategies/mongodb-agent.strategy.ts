@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { OpenAIEmbeddings } from '@langchain/openai';
 import { ChatAnthropic } from '@langchain/anthropic';
 import { AIMessage, BaseMessage, HumanMessage } from '@langchain/core/messages';
@@ -21,6 +21,8 @@ import { MongoDBProvider } from '../../database/providers/mongodb.provider';
 
 @Injectable()
 export class MongoDBAgentStrategy implements AgentStrategy {
+  private readonly logger = new Logger(MongoDBAgentStrategy.name);
+
   constructor(private readonly mongoProvider: MongoDBProvider) {}
 
   async executeAgent(query: string, threadId: string): Promise<AgentResponse> {
@@ -54,7 +56,10 @@ export class MongoDBAgentStrategy implements AgentStrategy {
     };
 
     // Create tools
-    const employeeLookupTool = createEmployeeLookupTool(vectorStoreConfig);
+    const employeeLookupTool = createEmployeeLookupTool(
+      vectorStoreConfig,
+      this.logger,
+    );
     const tools = [employeeLookupTool];
 
     // Create tool node

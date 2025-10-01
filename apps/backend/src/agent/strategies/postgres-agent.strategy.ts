@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { ChatAnthropic } from '@langchain/anthropic';
 import { OpenAIEmbeddings } from '@langchain/openai';
 import { AIMessage, BaseMessage, HumanMessage } from '@langchain/core/messages';
@@ -21,6 +21,8 @@ import { PostgresProvider } from '../../database/providers/postgres.provider';
 
 @Injectable()
 export class PostgresAgentStrategy implements AgentStrategy {
+  private readonly logger = new Logger(PostgresAgentStrategy.name);
+
   constructor(private readonly postgresProvider: PostgresProvider) {}
 
   async executeAgent(query: string, threadId: string): Promise<AgentResponse> {
@@ -57,7 +59,10 @@ export class PostgresAgentStrategy implements AgentStrategy {
     };
 
     // Create tools
-    const employeeLookupTool = createEmployeeLookupTool(vectorStoreConfig);
+    const employeeLookupTool = createEmployeeLookupTool(
+      vectorStoreConfig,
+      this.logger,
+    );
     const tools = [employeeLookupTool];
 
     // Create tool node

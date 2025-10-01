@@ -1,17 +1,19 @@
 import { tool } from '@langchain/core/tools';
 import { z } from 'zod';
 import { VectorStoreConfig } from '../interfaces/vector-store-config.interface';
+import { Logger } from '@nestjs/common';
 
 /**
  * Creates an employee lookup tool for the agent
  * @param vectorStore - The vector store configuration to use for searches
  */
-export function createEmployeeLookupTool(vectorStore: VectorStoreConfig) {
+export function createEmployeeLookupTool(
+  vectorStore: VectorStoreConfig,
+  logger: Logger,
+) {
   return tool(
     async ({ query, n = 10 }) => {
-      console.log(
-        `Employee lookup tool called with query: "${query}", n: ${n}`,
-      );
+      logger.log(`Employee lookup tool called with query: "${query}", n: ${n}`);
       const result = await vectorStore.similaritySearch(query, n);
       return result;
     },
