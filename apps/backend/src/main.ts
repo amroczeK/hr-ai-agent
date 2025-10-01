@@ -8,7 +8,7 @@ async function bootstrap() {
   const logger = new Logger(AppModule.name);
 
   app.enableCors({
-    origin: process.env.FRONTEND_URL || 'http://localhost:3001',
+    origin: process.env.FRONTEND_URL || 'http://localhost:3000',
     credentials: true,
   });
 
@@ -19,6 +19,8 @@ async function bootstrap() {
       transform: true,
     }),
   );
+
+  app.setGlobalPrefix('api');
 
   app.enableVersioning({
     type: VersioningType.URI,
@@ -33,8 +35,10 @@ async function bootstrap() {
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api/docs', app, documentFactory);
 
-  const port = process.env.PORT ?? 3000;
+  const port = process.env.PORT ?? 3001;
   await app.listen(port);
-  logger.log(`HR AI Agent backend is running on: http://localhost:${port}`);
+  logger.log(
+    `HR AI Agent backend is running on: http://localhost:${port}, swagger docs: http://localhost:${port}/api/docs`,
+  );
 }
 bootstrap();
