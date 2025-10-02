@@ -5,21 +5,33 @@ import {
   Logger,
 } from '@nestjs/common';
 import { Pool, PoolClient } from 'pg';
-import { databaseConfig } from '../../config/database.config';
+import { DatabaseConfig } from '../../config/database.config';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class PostgresProvider implements OnModuleInit, OnModuleDestroy {
   private readonly logger = new Logger(PostgresProvider.name);
   private pool: Pool;
+  private config: DatabaseConfig['postgres'];
+
+  constructor(private readonly configService: ConfigService<DatabaseConfig>) {
+    const config =
+      this.configService.get<DatabaseConfig['postgres']>('postgres');
+
+    if (!config) {
+      throw new Error('Postgres configuration not found');
+    }
+    this.config = config;
+  }
 
   async onModuleInit() {
     try {
       this.pool = new Pool({
-        host: databaseConfig.postgres.host,
-        port: databaseConfig.postgres.port,
-        database: databaseConfig.postgres.database,
-        user: databaseConfig.postgres.user,
-        password: databaseConfig.postgres.password,
+        host: this.config.host,
+        port: this.config.port,
+        database: this.config.database,
+        user: this.config.user,
+        password: this.config.password,
       });
 
       const client = await this.pool.connect();

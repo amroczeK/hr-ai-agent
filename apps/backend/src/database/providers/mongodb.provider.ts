@@ -5,19 +5,30 @@ import {
   Logger,
 } from '@nestjs/common';
 import { MongoClient, Db, Collection } from 'mongodb';
-import { databaseConfig } from '../../config/database.config';
+import { DatabaseConfig } from '../../config/database.config';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class MongoDBProvider implements OnModuleInit, OnModuleDestroy {
   private readonly logger = new Logger(MongoDBProvider.name);
   private client: MongoClient;
   private db: Db;
+  private config: DatabaseConfig['mongodb'];
+
+  constructor(private readonly configService: ConfigService<DatabaseConfig>) {
+    const config = this.configService.get<DatabaseConfig['mongodb']>('mongodb');
+
+    if (!config) {
+      throw new Error('MongoDB configuration not found');
+    }
+    this.config = config;
+  }
 
   async onModuleInit() {
     try {
-      this.client = new MongoClient(databaseConfig.mongodb.uri);
+      this.client = new MongoClient(this.config.uri);
       await this.client.connect();
-      this.db = this.client.db(databaseConfig.mongodb.dbName);
+      this.db = this.client.db(this.config.dbName);
       this.logger.log('MongoDB connected successfully');
     } catch (error) {
       this.logger.error('MongoDB connection error:', error);

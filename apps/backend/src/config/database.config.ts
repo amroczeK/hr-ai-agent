@@ -1,4 +1,4 @@
-export const databaseConfig = {
+export default () => ({
   mongodb: {
     uri: process.env.MONGODB_URI || 'mongodb://admin:admin@localhost:27017',
     dbName: process.env.MONGODB_DB_NAME || 'hr_database',
@@ -19,6 +19,29 @@ export const databaseConfig = {
     model: process.env.ANTHROPIC_MODEL || 'claude-sonnet-4-20250514',
     temperature: 0,
   },
-};
+});
 
 export type DatabaseType = 'mongodb' | 'postgres';
+
+export interface DatabaseConfig {
+  mongodb: {
+    uri: string;
+    dbName: string;
+    collectionName: string;
+    vectorIndexName: string;
+  };
+  postgres: {
+    host: string;
+    port: number;
+    database: string;
+    user: string;
+    password: string;
+    tableName: string;
+  };
+  llm: {
+    anthropicApiKey: string;
+    openaiApiKey: string;
+    model: string;
+    temperature: number;
+  };
+}

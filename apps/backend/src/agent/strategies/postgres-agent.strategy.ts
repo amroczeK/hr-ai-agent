@@ -16,14 +16,35 @@ import {
 } from '../interfaces/agent-strategy.interface';
 import { VectorStoreConfig } from '../interfaces/vector-store-config.interface';
 import { createEmployeeLookupTool } from '../tools/employee-lookup.tool';
-import { databaseConfig } from '../../config/database.config';
+import { DatabaseConfig } from '../../config/database.config';
 import { PostgresProvider } from '../../database/providers/postgres.provider';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class PostgresAgentStrategy implements AgentStrategy {
   private readonly logger = new Logger(PostgresAgentStrategy.name);
+  private postgresConfig: DatabaseConfig['postgres'];
+  private llmConfig: DatabaseConfig['llm'];
 
-  constructor(private readonly postgresProvider: PostgresProvider) {}
+  constructor(
+    private readonly postgresProvider: PostgresProvider,
+    private readonly configService: ConfigService<DatabaseConfig>,
+  ) {
+    const postgresConfig =
+      this.configService.get<DatabaseConfig['postgres']>('postgres');
+
+    if (!postgresConfig) {
+      throw new Error('Postgres configuration not found');
+    }
+    this.postgresConfig = postgresConfig;
+
+    const llmConfig = this.configService.get<DatabaseConfig['llm']>('llm');
+
+    if (!llmConfig) {
+      throw new Error('LLM configuration not found');
+    }
+    this.llmConfig = llmConfig;
+  }
 
   async executeAgent(query: string, threadId: string): Promise<AgentResponse> {
     // Get the connection pool from the provider
@@ -43,7 +64,7 @@ export class PostgresAgentStrategy implements AgentStrategy {
           new OpenAIEmbeddings(),
           {
             pool: pool,
-            tableName: databaseConfig.postgres.tableName,
+            tableName: (this as PostgresAgentStrategy).postgresConfig.tableName,
             columns: {
               idColumnName: 'id',
               vectorColumnName: 'embedding',
@@ -70,9 +91,9 @@ export class PostgresAgentStrategy implements AgentStrategy {
 
     // Create model with tools
     const model = new ChatAnthropic({
-      model: databaseConfig.llm.model,
-      temperature: databaseConfig.llm.temperature,
-      apiKey: databaseConfig.llm.anthropicApiKey,
+      model: this.llmConfig.model,
+      temperature: this.llmConfig.temperature,
+      apiKey: this.llmConfig.anthropicApiKey,
     }).bindTools(tools);
 
     // Define routing function

@@ -16,19 +16,40 @@ import {
 } from '../interfaces/agent-strategy.interface';
 import { VectorStoreConfig } from '../interfaces/vector-store-config.interface';
 import { createEmployeeLookupTool } from '../tools/employee-lookup.tool';
-import { databaseConfig } from '../../config/database.config';
+import { DatabaseConfig } from '../../config/database.config';
 import { MongoDBProvider } from '../../database/providers/mongodb.provider';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class MongoDBAgentStrategy implements AgentStrategy {
   private readonly logger = new Logger(MongoDBAgentStrategy.name);
+  private mongodbConfig: DatabaseConfig['mongodb'];
+  private llmConfig: DatabaseConfig['llm'];
 
-  constructor(private readonly mongoProvider: MongoDBProvider) {}
+  constructor(
+    private readonly mongoProvider: MongoDBProvider,
+    private readonly configService: ConfigService<DatabaseConfig>,
+  ) {
+    const mongodbConfig =
+      this.configService.get<DatabaseConfig['mongodb']>('mongodb');
+
+    if (!mongodbConfig) {
+      throw new Error('MongoDB configuration not found');
+    }
+    this.mongodbConfig = mongodbConfig;
+
+    const llmConfig = this.configService.get<DatabaseConfig['llm']>('llm');
+
+    if (!llmConfig) {
+      throw new Error('LLM configuration not found');
+    }
+    this.llmConfig = llmConfig;
+  }
 
   async executeAgent(query: string, threadId: string): Promise<AgentResponse> {
     const client = this.mongoProvider.getClient();
     const db = this.mongoProvider.getDb();
-    const collection = db.collection(databaseConfig.mongodb.collectionName);
+    const collection = db.collection(this.mongodbConfig.collectionName);
 
     // Define the graph state
     const GraphState = Annotation.Root({
@@ -44,7 +65,8 @@ export class MongoDBAgentStrategy implements AgentStrategy {
           new OpenAIEmbeddings(),
           {
             collection: collection,
-            indexName: databaseConfig.mongodb.vectorIndexName,
+            indexName: (this as MongoDBAgentStrategy).mongodbConfig
+              .vectorIndexName,
             textKey: 'embedding_text',
             embeddingKey: 'embedding',
           },
@@ -67,9 +89,9 @@ export class MongoDBAgentStrategy implements AgentStrategy {
 
     // Create model with tools
     const model = new ChatAnthropic({
-      model: databaseConfig.llm.model,
-      temperature: databaseConfig.llm.temperature,
-      apiKey: databaseConfig.llm.anthropicApiKey,
+      model: this.llmConfig.model,
+      temperature: this.llmConfig.temperature,
+      apiKey: this.llmConfig.anthropicApiKey,
     }).bindTools(tools);
 
     // Define routing function
@@ -119,7 +141,7 @@ Current time: {time}.`,
     // Initialize MongoDB checkpointer for conversation memory
     const checkpointer = new MongoDBSaver({
       client,
-      dbName: databaseConfig.mongodb.dbName,
+      dbName: this.mongodbConfig.dbName,
     });
 
     // Compile the graph
