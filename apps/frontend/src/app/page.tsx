@@ -1,103 +1,166 @@
-import Image from "next/image";
+"use client";
+
+import { useState, useCallback } from "react";
+import { Sidebar } from "@/components/chat/sidebar";
+import { ChatArea } from "@/components/chat/chat-area";
+import { ChatInput } from "@/components/chat/chat-input";
+import {
+  ChatThread,
+  DatabaseType,
+  Message,
+  ChatRequest,
+  ChatResponse,
+} from "@/types/chat";
 
 export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [threads, setThreads] = useState<ChatThread[]>([]);
+  const [currentThreadId, setCurrentThreadId] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [databaseType, setDatabaseType] = useState<DatabaseType>("postgres");
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+  const currentThread = threads.find((t) => t.id === currentThreadId);
+
+  const generateThreadTitle = (query: string): string => {
+    return query.length > 50 ? query.substring(0, 50) + "..." : query;
+  };
+
+  const handleNewChat = useCallback(() => {
+    setCurrentThreadId(null);
+    setDatabaseType("postgres");
+  }, []);
+
+  const handleThreadSelect = useCallback(
+    (threadId: string) => {
+      const thread = threads.find((t) => t.id === threadId);
+      if (thread) {
+        setCurrentThreadId(threadId);
+        setDatabaseType(thread.databaseType);
+      }
+    },
+    [threads]
+  );
+
+  const handleSubmit = async (message: string, dbType: DatabaseType) => {
+    setIsLoading(true);
+
+    // Create user message
+    const userMessage: Message = {
+      id: crypto.randomUUID(),
+      role: "user",
+      content: message,
+      timestamp: new Date().toISOString(),
+    };
+
+    // If no current thread, create a new one
+    let threadId = currentThreadId;
+    let updatedThreads = [...threads];
+
+    if (!threadId) {
+      const newThread: ChatThread = {
+        id: crypto.randomUUID(),
+        title: generateThreadTitle(message),
+        databaseType: dbType,
+        messages: [userMessage],
+        createdAt: new Date().toISOString(),
+      };
+      threadId = newThread.id;
+      updatedThreads = [newThread, ...updatedThreads];
+      setCurrentThreadId(threadId);
+      setThreads(updatedThreads);
+    } else {
+      // Add message to existing thread
+      updatedThreads = updatedThreads.map((thread) =>
+        thread.id === threadId
+          ? { ...thread, messages: [...thread.messages, userMessage] }
+          : thread
+      );
+      setThreads(updatedThreads);
+    }
+
+    try {
+      // Make API request
+      const requestBody: ChatRequest = {
+        query: message,
+        databaseType: dbType,
+        threadId: threadId,
+      };
+
+      const response = await fetch("http://localhost:3001/api/v1/chat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestBody),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to get response from server");
+      }
+
+      const data: ChatResponse = await response.json();
+
+      // Create assistant message
+      const assistantMessage: Message = {
+        id: crypto.randomUUID(),
+        role: "assistant",
+        content: data.content,
+        timestamp: data.timestamp,
+      };
+
+      // Add assistant message to thread
+      setThreads((prevThreads) =>
+        prevThreads.map((thread) =>
+          thread.id === threadId
+            ? { ...thread, messages: [...thread.messages, assistantMessage] }
+            : thread
+        )
+      );
+    } catch (error) {
+      console.error("Error sending message:", error);
+
+      // Add error message
+      const errorMessage: Message = {
+        id: crypto.randomUUID(),
+        role: "assistant",
+        content:
+          "Sorry, there was an error processing your request. Please try again.",
+        timestamp: new Date().toISOString(),
+      };
+
+      setThreads((prevThreads) =>
+        prevThreads.map((thread) =>
+          thread.id === threadId
+            ? { ...thread, messages: [...thread.messages, errorMessage] }
+            : thread
+        )
+      );
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <div className="flex h-screen">
+      <Sidebar
+        threads={threads}
+        currentThreadId={currentThreadId}
+        onThreadSelect={handleThreadSelect}
+        onNewChat={handleNewChat}
+      />
+
+      <div className="relative flex flex-1 flex-col overflow-hidden">
+        <ChatArea
+          messages={currentThread?.messages || []}
+          isLoading={isLoading}
+        />
+
+        <ChatInput
+          onSubmit={handleSubmit}
+          disabled={isLoading}
+          databaseType={databaseType}
+          onDatabaseTypeChange={setDatabaseType}
+        />
+      </div>
     </div>
   );
 }
