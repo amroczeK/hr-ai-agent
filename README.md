@@ -1,6 +1,11 @@
-# HR AI Agent Backend
+# HR AI Agent Backend + Frontend Chat Interface
 
-A production-ready NestJS backend for an intelligent HR chatbot that supports both MongoDB Atlas and PostgreSQL with PGVector. Built with LangChain, LangGraph, and Claude AI.
+A Next.js frontend and NestJS backend for an intelligent HR chatbot that supports both MongoDB Atlas and PostgreSQL with PGVector. Built with LangChain, LangGraph, and Claude AI.
+
+This project is an extension of MongoDB tutorial [Build a JavaScript AI Agent With LangGraph.js and MongoDB](https://youtu.be/qXDrWKVSx1w), demonstrating:
+- CLEAN Architecture
+- AI Agent development using NestJS framework + TypeScript
+- Simple OpenAI style frontend chat web app using Next.js + TypeScript + Shadcn + TailwindCSS
 
 ## 🚀 Features
 
@@ -9,140 +14,157 @@ A production-ready NestJS backend for an intelligent HR chatbot that supports bo
 - **Semantic Search**: Vector similarity search for employee information
 - **Conversation Memory**: Persistent chat history using database-specific checkpointers
 
----
+## Prerequisites Checklist
 
-# Turborepo starter
+- [ ] Node.js 18+ installed
+- [ ] npm or yarn installed
+- [ ] MongoDB Atlas account (free tier works)
+- [ ] API Keys:
+  - [ ] Anthropic API key
+  - [ ] OpenAI API key
 
-This Turborepo starter is maintained by the Turborepo core team.
+## Start Up Steps
+1. Follow the **Setup Steps** before proceeding
+2. Start the frontend and backend using turbo from the project root folder
+    ```bash
+    npm run dev
+    ```
+3. Access the frontend interface via [http://localhost:3000/](http://localhost:3000/)
+4. Access the backend API Swagger Docs via [http://localhost:3001/api/docs](http://localhost:3001/api/docs)
 
-## Using this example
+## Setup Steps
 
-Run the following command:
+### 1. Install Dependencies
 
-```sh
-npx create-turbo@latest
+```bash
+npm install
 ```
 
-## What's inside?
+### 2. Configure Environment Variables
 
-This Turborepo includes the following packages/apps:
+Copy the template and fill in your values:
 
-### Apps and Packages
-
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
-
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build
-yarn dlx turbo build
-pnpm exec turbo build
+```bash
+cd apps/backend
+cp .env.template .env
 ```
 
-You can build a specific package by using a [filter](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters):
+Edit `.env` and update `MONGODB_URI`, `ANTHROPIC_API_KEY` and `OPENAI_API_KEY`:
 
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build --filter=docs
+```env
+# For MongoDB Atlas
+MONGODB_ATLAS_URI=mongodb://admin:admin@localhost:27017
+MONGODB_DB_NAME=hr_database
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build --filter=docs
-yarn exec turbo build --filter=docs
-pnpm exec turbo build --filter=docs
-```
+# For PostgreSQL
+POSTGRES_HOST=localhost
+POSTGRES_PORT=5432
+POSTGRES_DB=hr_database
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=postgres
 
-### Develop
-
-To develop all apps and packages, run the following command:
-
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev
-yarn exec turbo dev
-pnpm exec turbo dev
+# Required API Keys
+ANTHROPIC_API_KEY=sk-ant-xxx
+OPENAI_API_KEY=sk-xxx
 ```
 
-You can develop a specific package by using a [filter](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters):
+### 3. Set Up Your Database
 
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev --filter=web
+The PostgreSQL database with PGVector extension is created as a container via [docker compose](./docker-compose.yml) later in this setup guide.
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev --filter=web
-yarn exec turbo dev --filter=web
-pnpm exec turbo dev --filter=web
-```
+#### Setup MongoDB Atlas
+MongoDB does not support Vector Search in local development, you have to create a MongoDB Atlas cluster hosted in their cloud environment, to use MongoDB as a Vector Database.
 
-### Remote Caching
+1. Create a cluster at [MongoDB Atlas](https://cloud.mongodb.com)
+2. Create database `hr_database` with collection `employees`
+3. Create vector search index named `vector_index`
+    1. Follow [YouTube tutorial](https://www.youtube.com/watch?v=qXDrWKVSx1w&t=765s)
+    2. Use JSON configuration
+        ```bash
+        {
+            "fields": [
+                {
+                "numDimensions": 1536,
+                "path": "embedding",
+                "similarity": "cosine",
+                "type": "vector"
+                }
+            ]
+        }
+        ```
+        >NOTE: OpenAI requires 1536 number of dimensions, [by default, the length of >the embedding vector is 1536](https://platform.openai.com/docs/guides/>embeddings#how-to-get-embeddings).
+4. Whitelist your IP address (should be done automatically)
 
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
+### 4. Start docker services
+This will stand-up the containers for the PostgreSQL database, MongoDB database, and PGAdmin.
 
-Turborepo can use a technique known as [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
+#### Start all services
 
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo login
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo login
-yarn exec turbo login
-pnpm exec turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo link
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo link
-yarn exec turbo link
-pnpm exec turbo link
+```bash
+docker-compose up -d
 ```
 
-## Useful Links
+#### Stop all services
 
-Learn more about the power of Turborepo:
+```bash
+docker-compose down
+```
 
-- [Tasks](https://turborepo.com/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.com/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.com/docs/reference/configuration)
-- [CLI Usage](https://turborepo.com/docs/reference/command-line-reference)
+### Stop and remove volumes (clean slate)
+
+```bash
+docker-compose down -v
+```
+
+#### Accessing Services
+
+#### PostgreSQL
+
+**Connection Details:**
+
+- Host: `localhost` via local client OR `hr-postgres` via [PGAdmin container](http://localhost:5050/)
+- Port: `5432`
+- Database: `hr_database`
+- Username: `postgres`
+- Password: `postgres`
+
+**Note**: When connecting from pgAdmin to PostgreSQL, use the container name `hr-postgres` as the hostname, NOT `localhost`. This is because pgAdmin runs inside Docker and needs to connect through the Docker network.
+
+### MongoDB
+
+**Connection Details:**
+
+- Host: `localhost`
+- Port: `27017`
+- Database: `hr_database`
+- Username: `admin`
+- Password: `admin`
+- Conneciton string: `mongodb://admin:admin@localhost:27017/`
+
+### 5. Seed the databases
+Run the [apps/backend/package.json scripts](./apps/backend/package.json).
+
+#### PostgreSQL
+```bash
+cd apps/backend
+npm run seed:postgres
+```
+
+#### MongoDB Atlas
+```bash
+cd apps/backend
+npm run seed:mongodb
+```
+
+## Showcase
+![Frontend Interface 1](./screenshots/fe-ui-1.png?raw=true "Frontend Interface 1")
+
+![Frontend Interface 2](./screenshots/fe-ui-2.png?raw=true "Frontend Interface 2")
+
+![PostgreSQL DB 1](./screenshots/pg-db-1.png?raw=true "PostgreSQL DB 1")
+
+![PostgreSQL DB 2](./screenshots/pg-db-2.png?raw=true "PostgreSQL DB 2")
+
+![MongoDB 1](./screenshots/mongodb-1.png?raw=true "MongoDB 1")
+
+![MongoDB 2](./screenshots/mongodb-2.png?raw=true "MongoDB 2")
