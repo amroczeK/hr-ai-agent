@@ -9,7 +9,11 @@ import "dotenv/config";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const client = new MongoClient(process.env.MONGODB_ATLAS_URI as string);
+if (!process.env.MONGODB_URI) {
+  throw new Error("MONGODB_URI is not set");
+}
+
+const client = new MongoClient(process.env.MONGODB_URI as string);
 
 interface Employee {
   employee_id: string;

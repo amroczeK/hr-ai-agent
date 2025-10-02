@@ -1,6 +1,7 @@
 export default () => ({
   mongodb: {
-    uri: process.env.MONGODB_URI || 'mongodb://admin:admin@localhost:27017',
+    uri:
+      process.env.MONGODB_ATLAS_URI || 'mongodb://admin:admin@localhost:27017',
     dbName: process.env.MONGODB_DB_NAME || 'hr_database',
     collectionName: 'employees',
     vectorIndexName: 'vector_index',

@@ -12,7 +12,7 @@ import configuration from './config/database.config';
       validationSchema: Joi.object({
         OPENAI_API_KEY: Joi.string().required(),
         ANTHROPIC_API_KEY: Joi.string().required(),
-        MONGODB_URI: Joi.string().required(),
+        MONGODB_ATLAS_URI: Joi.string().required(),
       }),
       load: [configuration],
     }),

@@ -56,6 +56,22 @@ interface Employee {
   notes: string;
 }
 
+if (!process.env.POSTGRES_HOST) {
+  throw new Error("POSTGRES_HOST is not set");
+}
+if (!process.env.POSTGRES_PORT) {
+  throw new Error("POSTGRES_PORT is not set");
+}
+if (!process.env.POSTGRES_DB) {
+  throw new Error("POSTGRES_DB is not set");
+}
+if (!process.env.POSTGRES_USER) {
+  throw new Error("POSTGRES_USER is not set");
+}
+if (!process.env.POSTGRES_PASSWORD) {
+  throw new Error("POSTGRES_PASSWORD is not set");
+}
+
 const pool = new Pool({
   host: process.env.POSTGRES_HOST || "localhost",
   port: parseInt(process.env.POSTGRES_PORT || "5432", 10),

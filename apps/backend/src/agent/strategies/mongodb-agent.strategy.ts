@@ -58,6 +58,8 @@ export class MongoDBAgentStrategy implements AgentStrategy {
       }),
     });
 
+    const indexName = this.mongodbConfig.vectorIndexName;
+
     // Create vector store configuration
     const vectorStoreConfig: VectorStoreConfig = {
       async similaritySearch(query: string, k: number): Promise<string> {
@@ -65,8 +67,7 @@ export class MongoDBAgentStrategy implements AgentStrategy {
           new OpenAIEmbeddings(),
           {
             collection: collection,
-            indexName: (this as MongoDBAgentStrategy).mongodbConfig
-              .vectorIndexName,
+            indexName,
             textKey: 'embedding_text',
             embeddingKey: 'embedding',
           },

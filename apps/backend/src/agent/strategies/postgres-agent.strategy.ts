@@ -57,6 +57,8 @@ export class PostgresAgentStrategy implements AgentStrategy {
       }),
     });
 
+    const tableName = this.postgresConfig.tableName;
+
     // Create vector store configuration
     const vectorStoreConfig: VectorStoreConfig = {
       async similaritySearch(query: string, k: number): Promise<string> {
@@ -64,7 +66,7 @@ export class PostgresAgentStrategy implements AgentStrategy {
           new OpenAIEmbeddings(),
           {
             pool: pool,
-            tableName: (this as PostgresAgentStrategy).postgresConfig.tableName,
+            tableName,
             columns: {
               idColumnName: 'id',
               vectorColumnName: 'embedding',
