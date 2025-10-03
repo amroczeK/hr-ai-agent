@@ -1,18 +1,30 @@
 # HR AI Agent Backend + Frontend Chat Interface
 
-A Next.js frontend and NestJS backend for an intelligent HR chatbot that supports both MongoDB Atlas and PostgreSQL with PGVector. Built with LangChain, LangGraph, and Claude AI.
+An intelligent HR chatbot platform with a Next.js frontend and NestJS backend, designed to provide a simple OpenAI-style chat experience. The system supports both MongoDB Atlas with Vector Search and PostgreSQL with PGVector, enabling flexible and efficient data handling for AI-driven applications.
 
-This project is an extension of MongoDB tutorial [Build a JavaScript AI Agent With LangGraph.js and MongoDB](https://youtu.be/qXDrWKVSx1w), demonstrating:
-- CLEAN Architecture
-- AI Agent development using NestJS framework + TypeScript
-- Simple OpenAI style frontend chat web app using Next.js + TypeScript + Shadcn + TailwindCSS
+Built using LangChain, LangGraph, OpenAI for embeddings and Claude AI for conversation, the project demonstrates how to integrate AI agent frameworks with scalable web technologies.
 
-## 🚀 Features
+This project extends the official MongoDB tutorial [Build a JavaScript AI Agent With LangGraph.js and MongoDB](https://youtu.be/qXDrWKVSx1w) by showcasing a full-stack implementation with additional features, architectural best practices, and multi-database support.
 
-- **Multi-Database Support**: Choose between MongoDB Atlas or PostgreSQL at runtime
+## 🚀 Features / Highlights
+
+- **Clean Architecture**
+- **AI Agent Development**: Implemented in NestJS with TypeScript, leveraging modular and extensible patterns
+- **Modern Frontend**: Simple OpenAI-style chat interface built with Next.js, TypeScript, Shadcn UI, and TailwindCSS
+- **Multi-Database Support**: Dual support for MongoDB Atlas + Vector Search and PostgreSQL + PGVector for structured and vector search capabilities
 - **Intelligent Conversations**: Powered by Claude 4 Sonnet with LangGraph
 - **Semantic Search**: Vector similarity search for employee information
 - **Conversation Memory**: Persistent chat history using database-specific checkpointers
+
+## Disclaimer
+
+This is by no means a production-ready implementation, feel free to fork it and extend the development.
+
+### TODOS
+- [ ] Implement authentication, authorization and Role-Based Access Control (RBAC)
+- [ ] Associate thread id's to the user
+- [ ] Add unit and integration tests
+- [ ] Implement Redis for caching purposes
 
 ## Prerequisites Checklist
 
