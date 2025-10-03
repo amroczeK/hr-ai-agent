@@ -6,6 +6,8 @@ Built using LangChain, LangGraph, OpenAI for embeddings and Claude AI for conver
 
 This project extends the official MongoDB tutorial [Build a JavaScript AI Agent With LangGraph.js and MongoDB](https://youtu.be/qXDrWKVSx1w) by showcasing a full-stack implementation with additional features, architectural best practices, and multi-database support.
 
+Connect with me on [LinkedIn](https://www.linkedin.com/in/adr-mroczek)
+
 ## 🚀 Features / Highlights
 
 - **Clean Architecture**
